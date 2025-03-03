@@ -1,0 +1,24 @@
+name: MSTeamSieble
+
+on:
+  schedule:
+    - cron: '0 1-11/2 * * *'  # รันทุกๆ 2 ชั่วโมง ตั้งแต่ 08:00 - 18:00 (UTC+7 -> UTC+1 ถึง UTC+11)
+  workflow_dispatch:  # ให้เรากด run ได้เองด้วย
+
+jobs:
+  run-script:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Run the script
+        run: python MSTeamsTicketAlert.py
